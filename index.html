@@ -3,33 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Yohereza Ubutumwa</title>
+    <title>Key DM - Search & Post</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .dm-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; }
-        h2 { color: #333; text-align: center; }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #218838; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; margin: 0; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #0056b3; }
+        .search-section { margin-top: 30px; border-top: 2px solid #eee; pt: 20px; }
+        .post { background: #f8f9fa; padding: 10px; margin: 10px 0; border-left: 4px solid #007bff; border-radius: 4px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-<div class="dm-container">
-    <h2>Key DM</h2>
-    <form action="https://formspree.io/f/grensren@gmail.com" method="POST">
-        <label>Izina ryawe:</label>
-        <input type="text" name="name" placeholder="Andika izina..." required>
-        
-        <label>Email yawe:</label>
-        <input type="email" name="_replyto" placeholder="Email yawe..." required>
-        
-        <label>Ubutumwa:</label>
-        <textarea name="message" rows="4" placeholder="Andika ubutumwa hano..." required></textarea>
-        
-        <button type="submit">Ohereza DM</button>
-    </form>
+<div class="container">
+    <h1>Key DM</h1>
+
+    <h3>Andika ikintu:</h3>
+    <input type="text" id="postTitle" placeholder="Izina ry'icyo wandika...">
+    <textarea id="postContent" rows="3" placeholder="Ubutumwa bwawe..."></textarea>
+    <button onclick="savePost()">Tangaza (Post)</button>
+
+    <div class="search-section">
+        <h3>Shakisha muri Key DM:</h3>
+        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Andika izina ushakisha...">
+        <div id="postsDisplay">
+            </div>
+    </div>
 </div>
+
+<script>
+    // Ahantu tubika ubutumwa (Muri uyu rugero tububika muri 'Local Storage')
+    let posts = JSON.parse(localStorage.getItem('keyDmPosts')) || [];
+
+    function displayPosts() {
+        const display = document.getElementById('postsDisplay');
+        display.innerHTML = '';
+        posts.forEach((post, index) => {
+            display.innerHTML += `
+                <div class="post" data-title="${post.title.toLowerCase()}">
+                    <strong>${post.title}</strong>
+                    <p>${post.content}</p>
+                </div>
+            `;
+        });
+    }
+
+    function savePost() {
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+
+        if(title && content) {
+            posts.push({ title, content });
+            localStorage.setItem('keyDmPosts', JSON.stringify(posts));
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            displayPosts();
+            alert("Byageze muri Key DM!");
+        } else {
+            alert("Banza wuzuze hose!");
+        }
+    }
+
+    function searchPosts() {
+        const filter = document.getElementById('searchInput').value.toLowerCase();
+        const allPosts = document.querySelectorAll('.post');
+
+        allPosts.forEach(post => {
+            const title = post.getAttribute('data-title');
+            if (title.includes(filter)) {
+                post.classList.remove('hidden');
+            } else {
+                post.classList.add('hidden');
+            }
+        });
+    }
+
+    // Hamagara iyi function kugira ngo ibyari bihari bishize bigaragare
+    displayPosts();
+</script>
 
 </body>
 </html>
