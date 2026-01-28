@@ -3,83 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Dark Mode (Pro)</title>
+    <title>Key DM - Premium Black</title>
     <style>
         :root { 
             --bg: #000000; 
-            --card-bg: #121212;
+            --card-bg: #111111;
             --text: #ffffff;
             --accent: #d4af37; 
             --border: #222;
         }
 
         body { 
-            font-family: 'Inter', 'Segoe UI', sans-serif; 
-            background: var(--bg); 
-            color: var(--text);
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: var(--bg); color: var(--text);
             margin: 0; padding: 20px; 
         }
 
         .container { 
-            max-width: 500px; margin: auto; 
+            max-width: 480px; margin: auto; 
             background: var(--card-bg); 
-            padding: 30px; border-radius: 20px; 
+            padding: 25px; border-radius: 20px; 
             border: 1px solid var(--border);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         /* Logo Icon Style */
-        .header-area { text-align: center; margin-bottom: 25px; }
+        .header-area { text-align: center; margin-bottom: 20px; }
         #siteLogo { 
-            width: 90px; height: 90px; 
-            border-radius: 15px; /* Icon Shape */
+            width: 85px; height: 85px; 
+            border-radius: 15px; 
             object-fit: cover; 
             border: 2px solid var(--accent);
-            background: #1a1a1a;
-            display: inline-block;
+            background: #000;
         }
 
-        h1 { font-size: 26px; margin: 10px 0; color: var(--accent); letter-spacing: 1px; }
-
-        .contact-info { 
+        .contact-bar { 
             font-size: 13px; color: #888; text-align: center; 
-            margin-bottom: 25px; border-bottom: 1px solid var(--border);
-            padding-bottom: 15px; line-height: 1.6;
+            margin-bottom: 20px; padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
         }
 
         input, textarea { 
-            width: 100%; padding: 14px; margin: 10px 0; 
-            border: 1px solid var(--border); border-radius: 12px; 
-            background: #080808; color: #fff; box-sizing: border-box; 
-            font-size: 15px;
+            width: 100%; padding: 12px; margin: 8px 0; 
+            border: 1px solid var(--border); border-radius: 10px; 
+            background: #000; color: #fff; box-sizing: border-box; 
         }
         
         button { 
-            width: 100%; padding: 14px; background: var(--accent); color: #000; 
-            border: none; border-radius: 12px; cursor: pointer; font-weight: bold; 
-            transition: 0.3s; margin-top: 5px;
+            width: 100%; padding: 12px; background: var(--accent); color: #000; 
+            border: none; border-radius: 10px; cursor: pointer; font-weight: bold; 
+            margin-top: 5px;
         }
-        button:hover { opacity: 0.9; transform: scale(0.98); }
 
         .post-card { 
-            background: #0a0a0a; padding: 20px; margin-top: 15px; 
-            border-radius: 15px; border: 1px solid var(--border);
-            transition: 0.3s;
+            background: #080808; padding: 15px; margin-top: 15px; 
+            border-radius: 12px; border: 1px solid var(--border);
+            position: relative;
         }
-        .post-card:hover { border-color: var(--accent); }
 
         .dm-btn { 
             background: #1db954; color: white; text-decoration: none; 
-            display: block; text-align: center; padding: 12px; 
-            border-radius: 8px; margin-top: 15px; font-weight: bold; font-size: 14px;
+            display: block; text-align: center; padding: 10px; 
+            border-radius: 8px; margin-top: 12px; font-weight: 600;
         }
 
         .admin-box { 
             display: none; background: #050505; padding: 20px; 
-            border-radius: 15px; border: 1px dashed var(--accent); margin-top: 25px; 
+            border-radius: 15px; border: 1px dashed var(--accent); margin-top: 20px; 
         }
 
-        .login-trigger { text-align: center; margin-top: 25px; color: #444; cursor: pointer; font-size: 11px; }
+        .del-btn { 
+            background: #ff4444; color: white; border: none; 
+            padding: 5px 10px; border-radius: 5px; cursor: pointer;
+            font-size: 11px; margin-top: 10px;
+        }
+
+        .login-link { text-align: center; margin-top: 25px; color: #333; cursor: pointer; font-size: 11px; }
         .hidden { display: none; }
     </style>
 </head>
@@ -87,12 +85,12 @@
 
 <div class="container">
     <div class="header-area">
-        <img id="siteLogo" src="" alt="Key DM" onerror="handleLogoError()">
-        <h1>Key DM</h1>
+        <img id="siteLogo" src="" alt="Icon" onerror="this.src='https://via.placeholder.com/85/d4af37/000000?text=KEY'">
+        <h1 style="color:var(--accent); margin:10px 0;">Key DM</h1>
     </div>
 
-    <div class="contact-info">
-        <p>📞 07896952187 <br> 📧 grensrena@gmail.com</p>
+    <div class="contact-bar">
+        📞 07896952187 | 📧 grensrena@gmail.com
     </div>
 
     <div id="userSection">
@@ -100,122 +98,121 @@
         <div id="searchResults"></div>
     </div>
 
-    <p class="login-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">SETTINGS</p>
+    <p class="login-link" onclick="document.getElementById('loginForm').classList.toggle('hidden')">SYSTEM SETTINGS</p>
 
     <div id="loginForm" class="hidden">
-        <input type="password" id="adminPass" placeholder="Injiza Password">
+        <input type="password" id="adminPass" placeholder="Admin Password">
         <button onclick="checkLogin()">Injira</button>
     </div>
 
     <div id="adminPanel" class="admin-box">
-        <h3 style="color:var(--accent); margin-top:0;">Admin Control</h3>
+        <h3 style="color:var(--accent); margin-top:0;">Admin Panel</h3>
         
-        <label style="font-size:12px;">Upload New Icon:</label>
+        <label style="font-size:12px;">Upload Logo (Iyariyo yose < 2MB):</label>
         <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()">
         
-        <label style="font-size:12px;">Change Admin Password:</label>
-        <input type="text" id="newPass" placeholder="Andika password nshya">
-        <button onclick="changePassword()" style="background:#333; color:white;">Update Password</button>
+        <label style="font-size:12px; margin-top:10px; display:block;">Change Password:</label>
+        <input type="text" id="newPass" placeholder="Password nshya">
+        <button onclick="changePassword()" style="background:#333; color:white;">Update</button>
         
-        <hr style="border:0.5px solid #222; margin:20px 0;">
+        <hr style="border:0.5px solid #222; margin:15px 0;">
         
-        <label style="font-size:12px;">Add New Post:</label>
-        <input type="text" id="postTitle" placeholder="Icyo ushaka ko babona (Title)">
-        <textarea id="postContent" rows="3" placeholder="Ibisobanuro birambuye..."></textarea>
-        <button onclick="savePost()">Publish Now</button>
+        <label style="font-size:12px;">New Post:</label>
+        <input type="text" id="postTitle" placeholder="Umutwe w'ubutumwa">
+        <textarea id="postContent" rows="3" placeholder="Ibisobanuro..."></textarea>
+        <button onclick="savePost()">Publish</button>
         
-        <button onclick="logout()" style="background:#cc0000; color:white; margin-top:20px;">Logout</button>
+        <button onclick="logout()" style="background:#600; color:white; margin-top:15px;">Logout</button>
     </div>
 </div>
 
 <script>
-    // Ahantu habikwa amakuru
-    let db = JSON.parse(localStorage.getItem('keyDmDB_Black_v2')) || {
+    let db = JSON.parse(localStorage.getItem('keyDm_Final')) || {
         password: "123",
-        logo: "", // Niba ari nsa, onerror izahita ikora
+        logo: "",
         posts: []
     };
 
-    // Ifoto y'agateganyo niba logo yanze
-    const DEFAULT_LOGO = "https://via.placeholder.com/90/d4af37/000000?text=KEY";
-
     function init() {
-        const logoImg = document.getElementById('siteLogo');
-        logoImg.src = db.logo || DEFAULT_LOGO;
+        if(db.logo) document.getElementById('siteLogo').src = db.logo;
         displayPosts();
-    }
-
-    // Niba ifoto yanzwe cyangwa itabonetse
-    function handleLogoError() {
-        document.getElementById('siteLogo').src = DEFAULT_LOGO;
-        console.log("Logo yanze, twashyizeho default.");
     }
 
     function checkLogin() {
         if(document.getElementById('adminPass').value === db.password) {
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('loginForm').classList.add('hidden');
-        } else { alert("Password ntabwo ari yo!"); }
+        } else { alert("Password siyo!"); }
     }
 
     function uploadLogo() {
         const file = document.getElementById('logoUpload').files[0];
-        if (file.size > 2000000) { // Limit to 2MB for localStorage
+        if (!file) return;
+
+        if (file.size > 2 * 1024 * 1024) {
             alert("Ifoto ni nini cyane! Koresha iri munsi ya 2MB.");
             return;
         }
+
         const reader = new FileReader();
         reader.onloadend = function() {
             db.logo = reader.result;
             saveDB();
             document.getElementById('siteLogo').src = db.logo;
-            alert("Logo nshya yemejwe!");
         }
-        if (file) reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
     }
 
     function changePassword() {
-        const newP = document.getElementById('newPass').value;
-        if(newP) {
-            db.password = newP;
-            saveDB();
-            alert("Password yahindutse burundu!");
-            document.getElementById('newPass').value = "";
-        }
+        const p = document.getElementById('newPass').value;
+        if(p) { db.password = p; saveDB(); alert("Password yahindutse!"); }
     }
 
     function savePost() {
-        const title = document.getElementById('postTitle').value;
-        const content = document.getElementById('postContent').value;
-        if(title && content) {
-            db.posts.push({ title, content });
+        const t = document.getElementById('postTitle').value;
+        const c = document.getElementById('postContent').value;
+        if(t && c) {
+            db.posts.push({ id: Date.now(), title: t, content: c });
             saveDB();
+            displayPosts();
             document.getElementById('postTitle').value = "";
             document.getElementById('postContent').value = "";
+        }
+    }
+
+    function deletePost(id) {
+        if(confirm("Ushaka gusiba ubu butumwa?")) {
+            db.posts = db.posts.filter(p => p.id !== id);
+            saveDB();
             displayPosts();
-            alert("Ubutumwa bwatangajwe!");
         }
     }
 
     function displayPosts(filter = "") {
         const div = document.getElementById('searchResults');
         div.innerHTML = "";
+        const isAdmin = document.getElementById('adminPanel').style.display === 'block';
+        
         const filtered = db.posts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()));
         
         filtered.forEach(post => {
             div.innerHTML += `
                 <div class="post-card">
                     <h3 style="margin:0; color:var(--accent)">${post.title}</h3>
-                    <p style="color:#aaa; font-size:14px; line-height:1.5;">${post.content}</p>
-                    <a href="mailto:grensrena@gmail.com?subject=KeyDM Inquiry: ${post.title}" class="dm-btn">Ohereza DM</a>
+                    <p style="color:#aaa; font-size:14px;">${post.content}</p>
+                    <a href="mailto:grensrena@gmail.com?subject=KeyDM: ${post.title}" class="dm-btn">Ohereza DM</a>
+                    ${isAdmin ? `<button class="del-btn" onclick="deletePost(${post.id})">Siba Post</button>` : ''}
                 </div>
             `;
         });
     }
 
     function searchPosts() { displayPosts(document.getElementById('searchInput').value); }
-    function saveDB() { localStorage.setItem('keyDmDB_Black_v2', JSON.stringify(db)); }
-    function logout() { document.getElementById('adminPanel').style.display = 'none'; }
+    function saveDB() { localStorage.setItem('keyDm_Final', JSON.stringify(db)); }
+    function logout() { 
+        document.getElementById('adminPanel').style.display = 'none'; 
+        displayPosts(); 
+    }
 
     init();
 </script>
