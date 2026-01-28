@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Search & Post</title>
+    <title>Key DM - Admin & Search</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; margin: 0; padding: 20px; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #333; }
+        :root { --primary: #2c3e50; --accent: #3498db; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: var(--primary); }
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        button:hover { background-color: #0056b3; }
-        .search-section { margin-top: 30px; border-top: 2px solid #eee; pt: 20px; }
-        .post { background: #f8f9fa; padding: 10px; margin: 10px 0; border-left: 4px solid #007bff; border-radius: 4px; }
+        button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: var(--accent); }
+        .post-card { background: #fff; border: 1px solid #eee; padding: 15px; margin-top: 15px; border-radius: 10px; border-left: 5px solid var(--accent); }
+        .admin-section { display: none; background: #f9f9f9; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px dashed #ccc; }
+        .contact-btn { background: #27ae60; margin-top: 10px; text-decoration: none; color: white; display: block; text-align: center; padding: 10px; border-radius: 8px; }
         .hidden { display: none; }
+        .login-link { cursor: pointer; color: blue; font-size: 12px; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -21,34 +24,69 @@
 <div class="container">
     <h1>Key DM</h1>
 
-    <h3>Andika ikintu:</h3>
-    <input type="text" id="postTitle" placeholder="Izina ry'icyo wandika...">
-    <textarea id="postContent" rows="3" placeholder="Ubutumwa bwawe..."></textarea>
-    <button onclick="savePost()">Tangaza (Post)</button>
+    <div id="userSection">
+        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha amakuru hano...">
+        <div id="searchResults"></div>
+    </div>
 
-    <div class="search-section">
-        <h3>Shakisha muri Key DM:</h3>
-        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Andika izina ushakisha...">
-        <div id="postsDisplay">
-            </div>
+    <hr>
+    <p class="login-link" onclick="toggleLogin()">Admin Login</p>
+
+    <div id="loginForm" class="hidden">
+        <input type="password" id="adminPass" placeholder="Injiza Password ya Admin">
+        <button onclick="checkLogin()">Injira</button>
+    </div>
+
+    <div id="adminPanel" class="admin-section">
+        <h2>Admin Panel</h2>
+        <input type="text" id="postTitle" placeholder="Izina ry'ikintu (Title)">
+        <textarea id="postContent" rows="4" placeholder="Andika amakuru hano..."></textarea>
+        <button onclick="savePost()">Post & Update Website</button>
+        <button onclick="logout()" style="background: #e74c3c; margin-top: 5px;">Logout</button>
     </div>
 </div>
 
 <script>
-    // Ahantu tubika ubutumwa (Muri uyu rugero tububika muri 'Local Storage')
-    let posts = JSON.parse(localStorage.getItem('keyDmPosts')) || [];
+    // 1. Password ya Admin (Cyangwa wayihindura hano)
+    const ADMIN_PASSWORD = "123"; 
 
-    function displayPosts() {
-        const display = document.getElementById('postsDisplay');
-        display.innerHTML = '';
-        posts.forEach((post, index) => {
-            display.innerHTML += `
-                <div class="post" data-title="${post.title.toLowerCase()}">
-                    <strong>${post.title}</strong>
+    // 2. Kuzana ibyabitswe
+    let posts = JSON.parse(localStorage.getItem('keyDmData')) || [];
+
+    function displayPosts(filter = "") {
+        const resultsDiv = document.getElementById('searchResults');
+        resultsDiv.innerHTML = "";
+        
+        const filtered = posts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()));
+
+        filtered.forEach(post => {
+            resultsDiv.innerHTML += `
+                <div class="post-card">
+                    <h3>${post.title}</h3>
                     <p>${post.content}</p>
+                    <a href="mailto:grensren@gmail.com?subject=Contact via Key DM: ${post.title}" class="contact-btn">Contact Us</a>
                 </div>
             `;
         });
+        
+        if(filtered.length === 0 && filter !== "") {
+            resultsDiv.innerHTML = "<p style='text-align:center'>Ntabwo bibonetse...</p>";
+        }
+    }
+
+    // 3. Admin Functions
+    function toggleLogin() {
+        document.getElementById('loginForm').classList.toggle('hidden');
+    }
+
+    function checkLogin() {
+        const pass = document.getElementById('adminPass').value;
+        if(pass === ADMIN_PASSWORD) {
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('loginForm').classList.add('hidden');
+        } else {
+            alert("Password si yo!");
+        }
     }
 
     function savePost() {
@@ -57,31 +95,26 @@
 
         if(title && content) {
             posts.push({ title, content });
-            localStorage.setItem('keyDmPosts', JSON.stringify(posts));
-            document.getElementById('postTitle').value = '';
-            document.getElementById('postContent').value = '';
+            localStorage.setItem('keyDmData', JSON.stringify(posts));
+            alert("Byamaze kujyaho!");
+            document.getElementById('postTitle').value = "";
+            document.getElementById('postContent').value = "";
             displayPosts();
-            alert("Byageze muri Key DM!");
-        } else {
-            alert("Banza wuzuze hose!");
         }
     }
 
-    function searchPosts() {
-        const filter = document.getElementById('searchInput').value.toLowerCase();
-        const allPosts = document.querySelectorAll('.post');
-
-        allPosts.forEach(post => {
-            const title = post.getAttribute('data-title');
-            if (title.includes(filter)) {
-                post.classList.remove('hidden');
-            } else {
-                post.classList.add('hidden');
-            }
-        });
+    function logout() {
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('adminPass').value = "";
     }
 
-    // Hamagara iyi function kugira ngo ibyari bihari bishize bigaragare
+    // 4. Search Function
+    function searchPosts() {
+        const term = document.getElementById('searchInput').value;
+        displayPosts(term);
+    }
+
+    // Tangira ugaragaza ibirimo
     displayPosts();
 </script>
 
