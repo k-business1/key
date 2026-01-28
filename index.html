@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Dark Edition</title>
+    <title>Key DM - Dark Mode (Pro)</title>
     <style>
         :root { 
             --bg: #000000; 
-            --card-bg: #1a1a1a;
+            --card-bg: #121212;
             --text: #ffffff;
             --accent: #d4af37; 
-            --border: #333;
+            --border: #222;
         }
 
         body { 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Inter', 'Segoe UI', sans-serif; 
             background: var(--bg); 
             color: var(--text);
             margin: 0; padding: 20px; 
@@ -23,56 +23,63 @@
         .container { 
             max-width: 500px; margin: auto; 
             background: var(--card-bg); 
-            padding: 30px; border-radius: 15px; 
+            padding: 30px; border-radius: 20px; 
             border: 1px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
-        /* Logo nk'Icon (Square with slight radius) */
-        .header-area { text-align: center; margin-bottom: 20px; }
+        /* Logo Icon Style */
+        .header-area { text-align: center; margin-bottom: 25px; }
         #siteLogo { 
-            width: 80px; height: 80px; 
-            border-radius: 12px; /* Remove cycle, make it an icon */
+            width: 90px; height: 90px; 
+            border-radius: 15px; /* Icon Shape */
             object-fit: cover; 
             border: 2px solid var(--accent);
+            background: #1a1a1a;
+            display: inline-block;
         }
 
-        h1 { font-size: 24px; margin: 10px 0; color: var(--accent); }
+        h1 { font-size: 26px; margin: 10px 0; color: var(--accent); letter-spacing: 1px; }
 
-        /* Contact Section */
         .contact-info { 
-            font-size: 14px; color: #bbb; text-align: center; 
-            margin-bottom: 20px; border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
+            font-size: 13px; color: #888; text-align: center; 
+            margin-bottom: 25px; border-bottom: 1px solid var(--border);
+            padding-bottom: 15px; line-height: 1.6;
         }
 
         input, textarea { 
-            width: 100%; padding: 12px; margin: 10px 0; 
-            border: 1px solid var(--border); border-radius: 8px; 
-            background: #222; color: #fff; box-sizing: border-box; 
+            width: 100%; padding: 14px; margin: 10px 0; 
+            border: 1px solid var(--border); border-radius: 12px; 
+            background: #080808; color: #fff; box-sizing: border-box; 
+            font-size: 15px;
         }
         
         button { 
-            width: 100%; padding: 12px; background: var(--accent); color: #000; 
-            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; 
+            width: 100%; padding: 14px; background: var(--accent); color: #000; 
+            border: none; border-radius: 12px; cursor: pointer; font-weight: bold; 
+            transition: 0.3s; margin-top: 5px;
         }
+        button:hover { opacity: 0.9; transform: scale(0.98); }
 
         .post-card { 
-            background: #111; padding: 15px; margin-top: 15px; 
-            border-radius: 10px; border: 1px solid var(--border);
+            background: #0a0a0a; padding: 20px; margin-top: 15px; 
+            border-radius: 15px; border: 1px solid var(--border);
+            transition: 0.3s;
         }
+        .post-card:hover { border-color: var(--accent); }
 
         .dm-btn { 
-            background: #28a745; color: white; text-decoration: none; 
-            display: block; text-align: center; padding: 10px; 
-            border-radius: 5px; margin-top: 10px; font-weight: bold; 
+            background: #1db954; color: white; text-decoration: none; 
+            display: block; text-align: center; padding: 12px; 
+            border-radius: 8px; margin-top: 15px; font-weight: bold; font-size: 14px;
         }
 
         .admin-box { 
-            display: none; background: #0a0a0a; padding: 20px; 
-            border-radius: 12px; border: 1px dashed var(--accent); margin-top: 20px; 
+            display: none; background: #050505; padding: 20px; 
+            border-radius: 15px; border: 1px dashed var(--accent); margin-top: 25px; 
         }
 
-        .login-trigger { text-align: center; margin-top: 20px; color: #555; cursor: pointer; font-size: 12px; }
+        .login-trigger { text-align: center; margin-top: 25px; color: #444; cursor: pointer; font-size: 11px; }
         .hidden { display: none; }
     </style>
 </head>
@@ -80,12 +87,12 @@
 
 <div class="container">
     <div class="header-area">
-        <img id="siteLogo" src="" alt="Icon">
+        <img id="siteLogo" src="" alt="Key DM" onerror="handleLogoError()">
         <h1>Key DM</h1>
     </div>
 
     <div class="contact-info">
-        <p>📞 07896952187 | 📧 grensrena@gmail.com</p>
+        <p>📞 07896952187 <br> 📧 grensrena@gmail.com</p>
     </div>
 
     <div id="userSection">
@@ -93,60 +100,76 @@
         <div id="searchResults"></div>
     </div>
 
-    <p class="login-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">Admin Portal</p>
+    <p class="login-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">SETTINGS</p>
 
     <div id="loginForm" class="hidden">
-        <input type="password" id="adminPass" placeholder="Password">
+        <input type="password" id="adminPass" placeholder="Injiza Password">
         <button onclick="checkLogin()">Injira</button>
     </div>
 
     <div id="adminPanel" class="admin-box">
-        <h3 style="color:var(--accent)">Admin Settings</h3>
+        <h3 style="color:var(--accent); margin-top:0;">Admin Control</h3>
         
-        <label>Upload Icon Logo:</label>
+        <label style="font-size:12px;">Upload New Icon:</label>
         <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()">
         
-        <label>Change Password:</label>
-        <input type="text" id="newPass" placeholder="Password nshya">
-        <button onclick="changePassword()" style="background:#444; color:white;">Save Password</button>
+        <label style="font-size:12px;">Change Admin Password:</label>
+        <input type="text" id="newPass" placeholder="Andika password nshya">
+        <button onclick="changePassword()" style="background:#333; color:white;">Update Password</button>
         
-        <hr style="border:0.5px solid #333; margin:20px 0;">
+        <hr style="border:0.5px solid #222; margin:20px 0;">
         
-        <label>New Post:</label>
-        <input type="text" id="postTitle" placeholder="Title">
-        <textarea id="postContent" rows="3" placeholder="Ibisobanuro..."></textarea>
-        <button onclick="savePost()">Publish</button>
+        <label style="font-size:12px;">Add New Post:</label>
+        <input type="text" id="postTitle" placeholder="Icyo ushaka ko babona (Title)">
+        <textarea id="postContent" rows="3" placeholder="Ibisobanuro birambuye..."></textarea>
+        <button onclick="savePost()">Publish Now</button>
         
-        <button onclick="logout()" style="background:#900; color:white; margin-top:20px;">Logout</button>
+        <button onclick="logout()" style="background:#cc0000; color:white; margin-top:20px;">Logout</button>
     </div>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('keyDmDB_Black')) || {
+    // Ahantu habikwa amakuru
+    let db = JSON.parse(localStorage.getItem('keyDmDB_Black_v2')) || {
         password: "123",
-        logo: "https://via.placeholder.com/80/d4af37/000000?text=K",
+        logo: "", // Niba ari nsa, onerror izahita ikora
         posts: []
     };
 
+    // Ifoto y'agateganyo niba logo yanze
+    const DEFAULT_LOGO = "https://via.placeholder.com/90/d4af37/000000?text=KEY";
+
     function init() {
-        document.getElementById('siteLogo').src = db.logo;
+        const logoImg = document.getElementById('siteLogo');
+        logoImg.src = db.logo || DEFAULT_LOGO;
         displayPosts();
+    }
+
+    // Niba ifoto yanzwe cyangwa itabonetse
+    function handleLogoError() {
+        document.getElementById('siteLogo').src = DEFAULT_LOGO;
+        console.log("Logo yanze, twashyizeho default.");
     }
 
     function checkLogin() {
         if(document.getElementById('adminPass').value === db.password) {
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('loginForm').classList.add('hidden');
-        } else { alert("Password siyo!"); }
+        } else { alert("Password ntabwo ari yo!"); }
     }
 
     function uploadLogo() {
         const file = document.getElementById('logoUpload').files[0];
+        if (file.size > 2000000) { // Limit to 2MB for localStorage
+            alert("Ifoto ni nini cyane! Koresha iri munsi ya 2MB.");
+            return;
+        }
         const reader = new FileReader();
         reader.onloadend = function() {
             db.logo = reader.result;
             saveDB();
             document.getElementById('siteLogo').src = db.logo;
+            alert("Logo nshya yemejwe!");
         }
         if (file) reader.readAsDataURL(file);
     }
@@ -156,7 +179,7 @@
         if(newP) {
             db.password = newP;
             saveDB();
-            alert("Password yahindutse!");
+            alert("Password yahindutse burundu!");
             document.getElementById('newPass').value = "";
         }
     }
@@ -170,6 +193,7 @@
             document.getElementById('postTitle').value = "";
             document.getElementById('postContent').value = "";
             displayPosts();
+            alert("Ubutumwa bwatangajwe!");
         }
     }
 
@@ -182,15 +206,15 @@
             div.innerHTML += `
                 <div class="post-card">
                     <h3 style="margin:0; color:var(--accent)">${post.title}</h3>
-                    <p style="color:#ccc; font-size:14px;">${post.content}</p>
-                    <a href="mailto:grensrena@gmail.com?subject=KeyDM: ${post.title}" class="dm-btn">Ohereza DM</a>
+                    <p style="color:#aaa; font-size:14px; line-height:1.5;">${post.content}</p>
+                    <a href="mailto:grensrena@gmail.com?subject=KeyDM Inquiry: ${post.title}" class="dm-btn">Ohereza DM</a>
                 </div>
             `;
         });
     }
 
     function searchPosts() { displayPosts(document.getElementById('searchInput').value); }
-    function saveDB() { localStorage.setItem('keyDmDB_Black', JSON.stringify(db)); }
+    function saveDB() { localStorage.setItem('keyDmDB_Black_v2', JSON.stringify(db)); }
     function logout() { document.getElementById('adminPanel').style.display = 'none'; }
 
     init();
