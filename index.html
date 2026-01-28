@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Search Engine</title>
+    <title>Key DM - Secure Edition</title>
     <style>
         :root { 
             --bg: #000000; 
@@ -24,6 +24,7 @@
             background: var(--card-bg); 
             padding: 25px; border-radius: 20px; 
             border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .header-area { text-align: center; margin-bottom: 20px; }
@@ -44,14 +45,19 @@
         input, textarea { 
             width: 100%; padding: 14px; margin: 8px 0; 
             border: 1px solid var(--border); border-radius: 12px; 
-            background: #000; color: #fff; box-sizing: border-box; 
-            font-size: 16px;
+            background: #080808; color: #fff; box-sizing: border-box; 
+            font-size: 16px; outline: none;
         }
         
+        input:focus { border-color: var(--accent); }
+
         button { 
             width: 100%; padding: 12px; background: var(--accent); color: #000; 
             border: none; border-radius: 10px; cursor: pointer; font-weight: bold; 
+            margin-top: 5px; transition: 0.3s;
         }
+
+        button:hover { opacity: 0.9; }
 
         .post-card { 
             background: #080808; padding: 18px; margin-top: 15px; 
@@ -70,7 +76,11 @@
             font-size: 11px; margin-top: 12px;
         }
 
-        .login-link { text-align: center; margin-top: 30px; color: #333; cursor: pointer; font-size: 11px; }
+        .admin-trigger { 
+            text-align: center; margin-top: 30px; color: #333; 
+            cursor: pointer; font-size: 11px; text-transform: uppercase;
+        }
+
         .hidden { display: none; }
         
         h3 { margin: 0 0 8px 0; color: var(--accent); }
@@ -90,40 +100,41 @@
     </div>
 
     <div id="userSection">
-        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha ikintu hano...">
+        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha ikintu muri Key DM...">
         <div id="searchResults"></div>
     </div>
 
-    <p class="login-link" onclick="document.getElementById('loginForm').classList.toggle('hidden')">ADMIN SETTINGS</p>
-
-    <div id="loginForm" class="hidden">
-        <input type="password" id="adminPass" placeholder="Admin Password">
+    <p class="admin-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">Admin Access</p>
+    
+    <div id="loginForm" class="hidden" style="margin-top: 10px;">
+        <input type="password" id="adminPass" placeholder="Injiza Password (Default: 123)">
         <button onclick="checkLogin()">Injira</button>
     </div>
 
     <div id="adminPanel" class="admin-box">
-        <h3 style="color:var(--accent)">Admin Control</h3>
+        <h3 style="color:var(--accent); text-align: center;">Settings</h3>
         
-        <label style="font-size:12px;">Update Icon (< 2MB):</label>
+        <label style="font-size:11px; color:#888;">Update Icon Logo:</label>
         <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()">
         
-        <label style="font-size:12px; margin-top:10px; display:block;">Update Password:</label>
-        <input type="text" id="newPass" placeholder="Password nshya">
-        <button onclick="changePassword()" style="background:#444; color:white;">Save</button>
+        <label style="font-size:11px; color:#888; margin-top:10px; display:block;">Change Admin Password:</label>
+        <input type="text" id="newPass" placeholder="Andika password nshya">
+        <button onclick="changePassword()" style="background:#444; color:white;">Save New Password</button>
         
         <hr style="border:0.5px solid #222; margin:15px 0;">
         
-        <label style="font-size:12px;">Add New Post:</label>
-        <input type="text" id="postTitle" placeholder="Izina ry'ikintu">
-        <textarea id="postContent" rows="3" placeholder="Ibisobanuro birambuye..."></textarea>
-        <button onclick="savePost()">Tangaza (Publish)</button>
+        <label style="font-size:11px; color:#888;">New Post:</label>
+        <input type="text" id="postTitle" placeholder="Izina (Title)">
+        <textarea id="postContent" rows="3" placeholder="Ibisobanuro..."></textarea>
+        <button onclick="savePost()">Publish Now</button>
         
-        <button onclick="logout()" style="background:#600; color:white; margin-top:15px;">Sohoka</button>
+        <button onclick="logout()" style="background:#600; color:white; margin-top:15px;">Sohoka (Logout)</button>
     </div>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('keyDm_Clean')) || {
+    // Database initialize
+    let db = JSON.parse(localStorage.getItem('keyDm_Final_Secure')) || {
         password: "123",
         logo: "",
         posts: []
@@ -134,12 +145,17 @@
         displayPosts();
     }
 
+    // Login logic
     function checkLogin() {
-        if(document.getElementById('adminPass').value === db.password) {
+        const p = document.getElementById('adminPass').value;
+        if(p === db.password) {
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('loginForm').classList.add('hidden');
-            displayPosts(); // Refresh kugira ngo Delete buttons zize
-        } else { alert("Password siyo!"); }
+            document.getElementById('adminPass').value = "";
+            displayPosts();
+        } else {
+            alert("Password ntabwo ari yo!");
+        }
     }
 
     function uploadLogo() {
@@ -158,7 +174,12 @@
 
     function changePassword() {
         const p = document.getElementById('newPass').value;
-        if(p) { db.password = p; saveDB(); alert("Byahindutse!"); }
+        if(p) { 
+            db.password = p; 
+            saveDB(); 
+            alert("Password yahindutse burundu!"); 
+            document.getElementById('newPass').value = "";
+        }
     }
 
     function savePost() {
@@ -186,7 +207,6 @@
         div.innerHTML = "";
         const isAdmin = document.getElementById('adminPanel').style.display === 'block';
         
-        // Isungura (Filtering) ubutumwa hakurikijwe ibyanditswe
         const filtered = db.posts.filter(p => 
             p.title.toLowerCase().includes(filter.toLowerCase()) || 
             p.content.toLowerCase().includes(filter.toLowerCase())
@@ -207,11 +227,11 @@
         displayPosts(document.getElementById('searchInput').value); 
     }
     
-    function saveDB() { localStorage.setItem('keyDm_Clean', JSON.stringify(db)); }
-    
-    function logout() { 
-        document.getElementById('adminPanel').style.display = 'none'; 
-        displayPosts(); 
+    function saveDB() { localStorage.setItem('keyDm_Final_Secure', JSON.stringify(db)); }
+
+    function logout() {
+        document.getElementById('adminPanel').style.display = 'none';
+        displayPosts();
     }
 
     init();
