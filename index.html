@@ -3,239 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Secure Edition</title>
+    <title>Key DM - Static Generator</title>
     <style>
-        :root { 
-            --bg: #000000; 
-            --card-bg: #111111;
-            --text: #ffffff;
-            --accent: #d4af37; 
-            --border: #222;
-        }
-
-        body { 
-            font-family: 'Segoe UI', system-ui, sans-serif; 
-            background: var(--bg); color: var(--text);
-            margin: 0; padding: 20px; 
-        }
-
-        .container { 
-            max-width: 480px; margin: auto; 
-            background: var(--card-bg); 
-            padding: 25px; border-radius: 20px; 
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .header-area { text-align: center; margin-bottom: 20px; }
-        #siteLogo { 
-            width: 85px; height: 85px; 
-            border-radius: 15px; 
-            object-fit: cover; 
-            border: 2px solid var(--accent);
-            background: #000;
-        }
-
-        .contact-bar { 
-            font-size: 13px; color: #888; text-align: center; 
-            margin-bottom: 20px; padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        input, textarea { 
-            width: 100%; padding: 14px; margin: 8px 0; 
-            border: 1px solid var(--border); border-radius: 12px; 
-            background: #080808; color: #fff; box-sizing: border-box; 
-            font-size: 16px; outline: none;
-        }
-        
-        input:focus { border-color: var(--accent); }
-
-        button { 
-            width: 100%; padding: 12px; background: var(--accent); color: #000; 
-            border: none; border-radius: 10px; cursor: pointer; font-weight: bold; 
-            margin-top: 5px; transition: 0.3s;
-        }
-
-        button:hover { opacity: 0.9; }
-
-        .post-card { 
-            background: #080808; padding: 18px; margin-top: 15px; 
-            border-radius: 12px; border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-        }
-
-        .admin-box { 
-            display: none; background: #050505; padding: 20px; 
-            border-radius: 15px; border: 1px dashed var(--accent); margin-top: 20px; 
-        }
-
-        .del-btn { 
-            background: #ff4444; color: white; border: none; 
-            padding: 6px 12px; border-radius: 6px; cursor: pointer;
-            font-size: 11px; margin-top: 12px;
-        }
-
-        .admin-trigger { 
-            text-align: center; margin-top: 30px; color: #333; 
-            cursor: pointer; font-size: 11px; text-transform: uppercase;
-        }
-
+        :root { --bg: #000; --card: #111; --accent: #d4af37; --text: #fff; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 480px; margin: auto; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #222; }
+        .header { text-align: center; margin-bottom: 20px; }
+        #siteLogo { width: 85px; height: 85px; border-radius: 15px; border: 2px solid var(--accent); object-fit: cover; }
+        .contact { font-size: 13px; color: #888; text-align: center; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #333; border-radius: 10px; background: #000; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--accent); color: #00; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .post-card { background: #080808; padding: 15px; margin-top: 15px; border-radius: 12px; border: 1px solid #222; border-left: 4px solid var(--accent); }
+        .admin-box { display: none; background: #050505; padding: 20px; border-radius: 15px; border: 1px dashed var(--accent); margin-top: 20px; }
+        .export-area { background: #111; color: #0f0; font-family: monospace; padding: 10px; font-size: 10px; height: 100px; overflow-y: scroll; margin-top: 10px; border: 1px solid #333; }
         .hidden { display: none; }
-        
-        h3 { margin: 0 0 8px 0; color: var(--accent); }
-        p { margin: 0; color: #ccc; line-height: 1.5; font-size: 15px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-area">
-        <img id="siteLogo" src="" alt="Icon" onerror="this.src='https://via.placeholder.com/85/d4af37/000000?text=KEY'">
+<div class="container" id="web-content">
+    <div class="header">
+        <img id="siteLogo" src="https://via.placeholder.com/85/d4af37/000?text=KEY" alt="Icon">
         <h1 style="color:var(--accent); margin:10px 0;">Key DM</h1>
     </div>
 
-    <div class="contact-bar">
+    <div class="contact">
         📞 07896952187 | 📧 grensrena@gmail.com
     </div>
 
-    <div id="userSection">
-        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha ikintu muri Key DM...">
-        <div id="searchResults"></div>
-    </div>
-
-    <p class="admin-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">Admin Access</p>
+    <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha ikintu...">
     
-    <div id="loginForm" class="hidden" style="margin-top: 10px;">
-        <input type="password" id="adminPass" placeholder="Injiza Password (Default: 123)">
+    <div id="searchResults">
+        </div>
+
+    <p style="text-align:center; color:#222; font-size:10px; cursor:pointer;" onclick="document.getElementById('loginForm').classList.toggle('hidden')">SETTINGS</p>
+    
+    <div id="loginForm" class="hidden">
+        <input type="password" id="adminPass" placeholder="Password (123)">
         <button onclick="checkLogin()">Injira</button>
     </div>
 
     <div id="adminPanel" class="admin-box">
-        <h3 style="color:var(--accent); text-align: center;">Settings</h3>
-        
-        <label style="font-size:11px; color:#888;">Update Icon Logo:</label>
-        <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()">
-        
-        <label style="font-size:11px; color:#888; margin-top:10px; display:block;">Change Admin Password:</label>
-        <input type="text" id="newPass" placeholder="Andika password nshya">
-        <button onclick="changePassword()" style="background:#444; color:white;">Save New Password</button>
-        
-        <hr style="border:0.5px solid #222; margin:15px 0;">
-        
-        <label style="font-size:11px; color:#888;">New Post:</label>
+        <h3 style="color:var(--accent); text-align:center;">Admin Editor</h3>
         <input type="text" id="postTitle" placeholder="Izina (Title)">
         <textarea id="postContent" rows="3" placeholder="Ibisobanuro..."></textarea>
-        <button onclick="savePost()">Publish Now</button>
+        <button onclick="savePost()">Add Post</button>
         
-        <button onclick="logout()" style="background:#600; color:white; margin-top:15px;">Sohoka (Logout)</button>
+        <hr style="border:1px solid #222; margin:20px 0;">
+        <p style="font-size:11px; color:var(--accent)">Kopiye iyi code uyishyire muri file yawe (.html) kugira ngo ihinduke burundu:</p>
+        <button onclick="exportCode()" style="background:#28a745; color:white;">Generate Full Code</button>
+        <div id="codeDisplay" class="export-area hidden"></div>
+        
+        <button onclick="location.reload()" style="background:#600; color:white; margin-top:20px;">Logout</button>
     </div>
 </div>
 
 <script>
-    // Database initialize
-    let db = JSON.parse(localStorage.getItem('keyDm_Final_Secure')) || {
-        password: "123",
-        logo: "",
-        posts: []
-    };
+    // Database
+    let db = JSON.parse(localStorage.getItem('keyDm_Final')) || { password: "123", posts: [] };
 
-    function init() {
-        if(db.logo) document.getElementById('siteLogo').src = db.logo;
-        displayPosts();
-    }
-
-    // Login logic
     function checkLogin() {
-        const p = document.getElementById('adminPass').value;
-        if(p === db.password) {
+        if(document.getElementById('adminPass').value === db.password) {
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('adminPass').value = "";
-            displayPosts();
-        } else {
-            alert("Password ntabwo ari yo!");
-        }
-    }
-
-    function uploadLogo() {
-        const file = document.getElementById('logoUpload').files[0];
-        if (!file) return;
-        if (file.size > 2 * 1024 * 1024) { alert("Ifoto ni nini cyane!"); return; }
-
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            db.logo = reader.result;
-            saveDB();
-            document.getElementById('siteLogo').src = db.logo;
-        }
-        reader.readAsDataURL(file);
-    }
-
-    function changePassword() {
-        const p = document.getElementById('newPass').value;
-        if(p) { 
-            db.password = p; 
-            saveDB(); 
-            alert("Password yahindutse burundu!"); 
-            document.getElementById('newPass').value = "";
-        }
+        } else { alert("Password siyo!"); }
     }
 
     function savePost() {
         const t = document.getElementById('postTitle').value;
         const c = document.getElementById('postContent').value;
         if(t && c) {
-            db.posts.push({ id: Date.now(), title: t, content: c });
-            saveDB();
+            db.posts.push({ title: t, content: c });
+            localStorage.setItem('keyDm_Final', JSON.stringify(db));
             displayPosts();
             document.getElementById('postTitle').value = "";
             document.getElementById('postContent').value = "";
         }
     }
 
-    function deletePost(id) {
-        if(confirm("Ushaka gusiba ubu butumwa?")) {
-            db.posts = db.posts.filter(p => p.id !== id);
-            saveDB();
-            displayPosts();
-        }
-    }
-
     function displayPosts(filter = "") {
         const div = document.getElementById('searchResults');
         div.innerHTML = "";
-        const isAdmin = document.getElementById('adminPanel').style.display === 'block';
-        
-        const filtered = db.posts.filter(p => 
-            p.title.toLowerCase().includes(filter.toLowerCase()) || 
-            p.content.toLowerCase().includes(filter.toLowerCase())
-        );
-        
+        const filtered = db.posts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()));
         filtered.forEach(post => {
-            div.innerHTML += `
-                <div class="post-card">
-                    <h3>${post.title}</h3>
-                    <p>${post.content}</p>
-                    ${isAdmin ? `<button class="del-btn" onclick="deletePost(${post.id})">Siba iyi Post</button>` : ''}
-                </div>
-            `;
+            div.innerHTML += `<div class="post-card"><h3>${post.title}</h3><p>${post.content}</p></div>`;
         });
     }
 
-    function searchPosts() { 
-        displayPosts(document.getElementById('searchInput').value); 
-    }
-    
-    function saveDB() { localStorage.setItem('keyDm_Final_Secure', JSON.stringify(db)); }
+    function searchPosts() { displayPosts(document.getElementById('searchInput').value); }
 
-    function logout() {
-        document.getElementById('adminPanel').style.display = 'none';
-        displayPosts();
+    // Iyi niyo function ikora "Magic" urashaka
+    function exportCode() {
+        const postsHTML = document.getElementById('searchResults').innerHTML;
+        const fullCode = document.documentElement.outerHTML;
+        const display = document.getElementById('codeDisplay');
+        display.classList.remove('hidden');
+        display.innerText = fullCode;
+        alert("Code nshya yabonetse munsi! Kopiye byose ubisimbure muri file yawe.");
     }
 
-    init();
+    displayPosts();
 </script>
-
 </body>
 </html>
