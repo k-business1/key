@@ -3,92 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key DM - Ultimate Version</title>
+    <title>Key DM - Gmail Sync</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <style>
-        :root { 
-            --bg: #000000; 
-            --card: #121212; 
-            --accent: #d4af37; 
-            --text: #ffffff; 
-            --border: #222;
-        }
-
-        body { 
-            font-family: 'Inter', 'Segoe UI', sans-serif; 
-            background: var(--bg); color: var(--text); 
-            margin: 0; padding: 20px; 
-        }
-
-        .container { 
-            max-width: 480px; margin: auto; 
-            background: var(--card); padding: 30px; 
-            border-radius: 20px; border: 1px solid var(--border);
-            box-shadow: 0 10px 50px rgba(0,0,0,0.8);
-        }
-
-        .header { text-align: center; margin-bottom: 25px; }
-        #siteLogo { 
-            width: 100px; height: 100px; 
-            border-radius: 18px; /* Icon Style */
-            border: 2px solid var(--accent); 
-            object-fit: cover; background: #000;
-        }
-
-        .contact-section { 
-            font-size: 14px; color: #888; text-align: center; 
-            margin-bottom: 25px; padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-            line-height: 1.6;
-        }
-
-        input, textarea { 
-            width: 100%; padding: 14px; margin: 10px 0; 
-            border: 1px solid var(--border); border-radius: 12px; 
-            background: #080808; color: #fff; box-sizing: border-box; 
-            font-size: 16px; outline: none;
-        }
-        
-        input:focus { border-color: var(--accent); }
-
-        button { 
-            width: 100%; padding: 14px; background: var(--accent); color: #000; 
-            border: none; border-radius: 12px; cursor: pointer; 
-            font-weight: bold; font-size: 16px; transition: 0.3s;
-        }
-
-        .post-card { 
-            background: #0a0a0a; padding: 20px; margin-top: 15px; 
-            border-radius: 15px; border: 1px solid var(--border);
-            border-left: 5px solid var(--accent);
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .admin-box { 
-            display: none; background: #050505; padding: 20px; 
-            border-radius: 15px; border: 1px dashed var(--accent); margin-top: 25px; 
-        }
-
-        .del-btn { 
-            background: #ff3333; color: white; border: none; 
-            padding: 8px 15px; border-radius: 8px; cursor: pointer;
-            font-size: 12px; margin-top: 15px; font-weight: bold;
-        }
-
-        .export-box { 
-            background: #000; color: #0f0; font-family: 'Courier New', monospace; 
-            padding: 10px; font-size: 10px; height: 120px; 
-            overflow: auto; border: 1px solid #333; margin-top: 15px;
-        }
-
-        .admin-trigger { 
-            text-align: center; margin-top: 40px; color: #222; 
-            cursor: pointer; font-size: 11px; letter-spacing: 2px;
-        }
-
-        h3 { margin: 0 0 10px 0; color: var(--accent); }
-        p { margin: 0; color: #bbb; line-height: 1.5; }
+        :root { --bg: #000; --card: #121212; --accent: #d4af37; --text: #fff; --border: #222; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 480px; margin: auto; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .header { text-align: center; margin-bottom: 20px; }
+        #siteLogo { width: 90px; height: 90px; border-radius: 15px; border: 2px solid var(--accent); object-fit: cover; }
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid var(--border); border-radius: 12px; background: #080808; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; background: var(--accent); color: #000; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .post-card { background: #0a0a0a; padding: 15px; margin-top: 15px; border-radius: 12px; border-left: 5px solid var(--accent); }
+        .admin-box { display: none; background: #050505; padding: 20px; border-radius: 15px; border: 1px dashed var(--accent); margin-top: 20px; }
+        .status-msg { font-size: 12px; text-align: center; margin-top: 5px; color: #28a745; display: none; }
+        .admin-trigger { text-align: center; margin-top: 30px; color: #222; cursor: pointer; font-size: 11px; }
         .hidden { display: none; }
     </style>
 </head>
@@ -96,153 +25,94 @@
 
 <div class="container">
     <div class="header">
-        <img id="siteLogo" src="https://via.placeholder.com/100/d4af37/000?text=KEY" alt="Key DM Icon">
-        <h1 style="color:var(--accent); margin:15px 0; font-size: 28px;">Key DM</h1>
+        <img id="siteLogo" src="logo.png" alt="Key DM" onerror="this.src='https://via.placeholder.com/90/d4af37/000?text=KEY'">
+        <h1 style="color:var(--accent); margin:10px 0;">Key DM</h1>
+        <p style="font-size: 12px; color: #888;">📧 grensrena@gmail.com</p>
     </div>
 
-    <div class="contact-section">
-        📞 07896952187 <br> 📧 grensrena@gmail.com
-    </div>
+    <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha...">
+    <div id="searchResults"></div>
 
-    <div id="userSection">
-        <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="Shakisha ikintu muri Key DM...">
-        <div id="searchResults">
-            </div>
-    </div>
-
-    <p class="admin-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">MANAGE SYSTEM</p>
+    <p class="admin-trigger" onclick="document.getElementById('loginForm').classList.toggle('hidden')">ADMIN SETTINGS</p>
     
     <div id="loginForm" class="hidden">
-        <input type="password" id="adminPass" placeholder="Injiza Password">
+        <input type="password" id="adminPass" placeholder="Password (123)">
         <button onclick="checkLogin()">Injira</button>
     </div>
 
     <div id="adminPanel" class="admin-box">
-        <h3 style="text-align: center;">Control Panel</h3>
-        
-        <label style="font-size:12px; color:#888;">Update Icon (< 2MB):</label>
-        <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()">
-        
-        <label style="font-size:12px; color:#888; margin-top:10px; display:block;">Change Password:</label>
-        <input type="text" id="newPass" placeholder="Password nshya">
-        <button onclick="changePassword()" style="background:#333; color:white;">Update Password</button>
-        
-        <hr style="border:0.5px solid #222; margin:20px 0;">
-        
-        <label style="font-size:12px; color:#888;">Add New Post:</label>
-        <input type="text" id="postTitle" placeholder="Title">
+        <h3 style="color:var(--accent); text-align:center;">Email Notification Active</h3>
+        <input type="text" id="postTitle" placeholder="Title y'ubutumwa">
         <textarea id="postContent" rows="3" placeholder="Ibisobanuro..."></textarea>
-        <button onclick="savePost()">Publish Post</button>
+        <button id="publishBtn" onclick="saveAndSend()">Tangaza & Ohereza kuri Gmail</button>
+        <p id="status" class="status-msg">Ubutumwa bwoherejwe kuri Gmail!</p>
         
-        <hr style="border:0.5px solid #222; margin:20px 0;">
-        <p style="font-size:11px; color:var(--accent); text-align:center;">Kanda hano uhindure code yawe burundu:</p>
-        <button onclick="exportCode()" style="background:#28a745; color:white;">GENERATE FULL CODE</button>
-        <div id="codeDisplay" class="export-box hidden"></div>
-        
-        <button onclick="location.reload()" style="background:#600; color:white; margin-top:20px;">Logout</button>
+        <button onclick="location.reload()" style="background:#444; color:#fff; margin-top:15px;">Logout</button>
     </div>
 </div>
 
 <script>
-    // Database initialize (Password ya mbere ni 123)
-    let db = JSON.parse(localStorage.getItem('keyDm_V3')) || { 
-        password: "123", 
-        logo: document.getElementById('siteLogo').src, 
-        posts: [] 
-    };
+    // 1. INITIALIZE EMAILJS (Gira kuri emailjs.com uhafurure 'Public Key' yawe)
+    (function() {
+        emailjs.init("YOUR_PUBLIC_KEY_HERE"); 
+    })();
 
-    function init() {
-        document.getElementById('siteLogo').src = db.logo;
-        displayPosts();
-    }
+    let db = JSON.parse(localStorage.getItem('keyDm_Gmail')) || { password: "123", posts: [] };
 
     function checkLogin() {
         if(document.getElementById('adminPass').value === db.password) {
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('loginForm').classList.add('hidden');
-            displayPosts();
         } else { alert("Password siyo!"); }
     }
 
-    function uploadLogo() {
-        const file = document.getElementById('logoUpload').files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            db.logo = reader.result;
-            document.getElementById('siteLogo').src = db.logo;
-            saveDB();
-        }
-        reader.readAsDataURL(file);
-    }
+    // GUKORA POST NO KOHEREZA EMAIL
+    function saveAndSend() {
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+        const btn = document.getElementById('publishBtn');
 
-    function changePassword() {
-        const p = document.getElementById('newPass').value;
-        if(p) { db.password = p; saveDB(); alert("Password yahindutse!"); }
-    }
+        if(title && content) {
+            btn.innerText = "Sending...";
+            btn.disabled = true;
 
-    function savePost() {
-        const t = document.getElementById('postTitle').value;
-        const c = document.getElementById('postContent').value;
-        if(t && c) {
-            db.posts.push({ id: Date.now(), title: t, content: c });
-            saveDB();
-            displayPosts();
-            document.getElementById('postTitle').value = "";
-            document.getElementById('postContent').value = "";
-        }
-    }
+            // Ohereza kuri Gmail binyuze kuri EmailJS
+            const templateParams = {
+                to_email: "grensrena@gmail.com",
+                subject: "Key DM New Post: " + title,
+                message: content
+            };
 
-    function deletePost(id) {
-        if(confirm("Gusiba ubu butumwa?")) {
-            db.posts = db.posts.filter(p => p.id !== id);
-            saveDB();
-            displayPosts();
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function() {
+                    db.posts.push({ title, content });
+                    localStorage.setItem('keyDm_Gmail', JSON.stringify(db));
+                    displayPosts();
+                    
+                    document.getElementById('status').style.display = 'block';
+                    btn.innerText = "Tangaza & Ohereza kuri Gmail";
+                    btn.disabled = false;
+                    
+                    document.getElementById('postTitle').value = "";
+                    document.getElementById('postContent').value = "";
+                }, function(error) {
+                    alert("Email ntabwo igiye: " + JSON.stringify(error));
+                    btn.disabled = false;
+                });
         }
     }
 
     function displayPosts(filter = "") {
         const div = document.getElementById('searchResults');
         div.innerHTML = "";
-        const isAdmin = document.getElementById('adminPanel').style.display === 'block';
-        
-        const filtered = db.posts.filter(p => 
-            p.title.toLowerCase().includes(filter.toLowerCase()) || 
-            p.content.toLowerCase().includes(filter.toLowerCase())
-        );
-        
+        const filtered = db.posts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()));
         filtered.forEach(post => {
-            div.innerHTML += `
-                <div class="post-card">
-                    <h3>${post.title}</h3>
-                    <p>${post.content}</p>
-                    ${isAdmin ? `<button class="del-btn" onclick="deletePost(${post.id})">Siba iyi Post</button>` : ''}
-                </div>
-            `;
+            div.innerHTML += `<div class="post-card"><h3>${post.title}</h3><p>${post.content}</p></div>`;
         });
     }
 
     function searchPosts() { displayPosts(document.getElementById('searchInput').value); }
-    function saveDB() { localStorage.setItem('keyDm_V3', JSON.stringify(db)); }
-
-    // Iyi function niyo ituma byose bijya muri code burundu
-    function exportCode() {
-        // Mbere yo koherereza code, reba niba uburyo bwo kwinjira bufufitse
-        document.getElementById('adminPanel').style.display = 'none';
-        
-        // Hindura src ya logo muri code
-        const currentLogo = document.getElementById('siteLogo').src;
-        
-        // Shaka code yose
-        let fullCode = document.documentElement.outerHTML;
-        
-        const display = document.getElementById('codeDisplay');
-        display.classList.remove('hidden');
-        display.innerText = fullCode;
-        alert("Byarangiye! Kopiye code iri mu gasanduku k'icyatsi maze uyisimbure muri file yawe (.html)");
-    }
-
-    init();
+    displayPosts();
 </script>
 </body>
 </html>
