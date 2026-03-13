@@ -356,158 +356,189 @@ Debt_Report_Name.txt</li>
                 <!-- Urutonde / List -->
 
                 <p>
-                   5️⃣ User Roles (Ububasha bw’abakoresha)
-
-System ishobora kugira abantu 3 bayikoresha:
-
-Admin
-
-kongera abanyeshuri
-
-guhindura settings
-
-gukora reports
-
-kwimura abanyeshuri mu term ikurikira
-
-Cashier
-
-kwandika payments
-
-kureba debt
-
-gushaka student
-
-Viewer
-
-kureba reports gusa
-
-ntashobora guhindura data
-
-16️⃣ Student Record Structure
-
-Buri student muri system agira ibi:
-
-Student ID
-Name
-Class
-Term
-Year
-Total Fees
-Paid
-Debt
-Status
-
-Debt ibarwa na system:
-
-Debt = Total Fees – Paid
-17️⃣ Data Protection
-
-User agomba:
-
-kudasangiza abandi database
-
-gukora backup buri week
-
-kwirinda gusiba records
-
-Database ya system ni:
-
-school.db
-18️⃣ Best Practices zo gukoresha system
-
-✔ Reba neza student mbere yo kwandika payment
-✔ Ntukore advance term utakoze backup
-✔ Buri munsi check students with debt
-
-19️⃣ Error Messages User ashobora kubona
-“Student already exists”
-
-Bisobanuye ko Student ID yasanzwe iri muri system.
-
-“No student selected”
-
-User yibagiwe guhitamo student mbere yo gukora action.
-
-“Database error”
-
-Hari ikibazo cya file ya database.
-
-20️⃣ Daily Workflow (uko system ikoreshwa buri munsi)
-
-User ashobora gukurikiza uru rutonde:
-
-Fungura system
-
-Reba dashboard
-
-Record payments
-
-Check debt students
-
-Export reports niba bikenewe
-
-Funga system
-
-21️⃣ End of Term Procedure
-
-Iyo igihembwe kirangiye:
-
-Kora backup ya database
-
-Reba debt y’abanyeshuri
-
-Kanda Advance Term
-
-System izimura abanyeshuri mu term ikurikira
-
-22️⃣ Security Advice
-
-Ntusige system ifunguye
-
-Koresha password kuri computer
-
-Bika backup kuri flash cyangwa cloud
-
-23️⃣ File Structure ya App
-
-App igizwe na:
-
-key dm.py        -> main application
-school.db        -> database
-reports/         -> exported reports
-backup/          -> database backups
-24️⃣ Developer Notes
-
-App yubatswe kuri:
-
-Python
-
-Tkinter GUI
-
-SQLite database
-
-Libraries zikunze gukoreshwa:
-
-tkinter
-sqlite3
-datetime
-os
-25️⃣ Future Improvements
-
-System ishobora kongerwamo:
-
-PDF receipts
-
-SMS notifications
-
-Student photo
-
-Online backup
-
-Multi-user login
-
-Mobile version
+                  <style>
+    .key-dm-list {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #2c3e50;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 25px;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+    }
+
+    .section-header {
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        display: block;
+        color: #2e7d32; /* Ibara rya Green ry'ikigo */
+    }
+
+    .sub-item {
+        margin-left: 30px;
+        display: block;
+        color: #555;
+    }
+
+    .formula-box {
+        background: #f1f8e9;
+        padding: 10px 20px;
+        border-left: 4px solid #2e7d32;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+
+    .file-path {
+        font-family: 'Courier New', monospace;
+        background: #f4f4f4;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #eee;
+        margin: 20px 0;
+    }
+</style>
+
+<div class="key-dm-list">
+
+    <span class="section-header">5️⃣ User Roles (Ububasha bw’abakoresha)</span>
+    <div>System ishobora kugira abantu 3 bayikoresha:</div>
+    
+    <div style="margin-top:10px;">
+        <strong>Admin</strong>
+        <span class="sub-item">kongera abanyeshuri</span>
+        <span class="sub-item">guhindura settings</span>
+        <span class="sub-item">gukora reports</span>
+        <span class="sub-item">kwimura abanyeshuri mu term ikurikira</span>
+    </div>
+
+    <div style="margin-top:10px;">
+        <strong>Cashier</strong>
+        <span class="sub-item">kwandika payments</span>
+        <span class="sub-item">kureba debt</span>
+        <span class="sub-item">gushaka student</span>
+    </div>
+
+    <div style="margin-top:10px;">
+        <strong>Viewer</strong>
+        <span class="sub-item">kureba reports gusa</span>
+        <span class="sub-item">ntashobora guhindura data</span>
+    </div>
+
+    <hr>
+
+    <span class="section-header">16️⃣ Student Record Structure</span>
+    <div>Buri student muri system agira ibi:</div>
+    <span class="sub-item">Student ID</span>
+    <span class="sub-item">Name</span>
+    <span class="sub-item">Class</span>
+    <span class="sub-item">Term</span>
+    <span class="sub-item">Year</span>
+    <span class="sub-item">Total Fees</span>
+    <span class="sub-item">Paid</span>
+    <span class="sub-item">Debt</span>
+    <span class="sub-item">Status</span>
+
+    <div class="formula-box">
+        Debt ibarwa na system: <br>
+        Debt = Total Fees – Paid
+    </div>
+
+    <hr>
+
+    <span class="section-header">17️⃣ Data Protection</span>
+    <div>User agomba:</div>
+    <span class="sub-item">kudasangiza abandi database</span>
+    <span class="sub-item">gukora backup buri week</span>
+    <span class="sub-item">kwirinda gusiba records</span>
+    <div style="margin-top:10px;">Database ya system ni: <span class="file-path">school.db</span></div>
+
+    <hr>
+
+    <span class="section-header">18️⃣ Best Practices zo gukoresha system</span>
+    <div class="sub-item">✔ Reba neza student mbere yo kwandika payment</div>
+    <div class="sub-item">✔ Ntukore advance term utakoze backup</div>
+    <div class="sub-item">✔ Buri munsi check students with debt</div>
+
+    <hr>
+
+    <span class="section-header">19️⃣ Error Messages User ashobora kubona</span>
+    <strong>“Student already exists”</strong>
+    <span class="sub-item">Bisobanuye ko Student ID yasanzwe iri muri system.</span>
+
+    <div style="margin-top:10px;">
+        <strong>“No student selected”</strong>
+        <span class="sub-item">User yibagiwe guhitamo student mbere yo gukora action.</span>
+    </div>
+
+    <div style="margin-top:10px;">
+        <strong>“Database error”</strong>
+        <span class="sub-item">Hari ikibazo cya file ya database.</span>
+    </div>
+
+    <hr>
+
+    <span class="section-header">20️⃣ Daily Workflow (uko system ikoreshwa buri munsi)</span>
+    <div>User ashobora gukurikiza uru rutonde:</div>
+    <span class="sub-item">1. Fungura system</span>
+    <span class="sub-item">2. Reba dashboard</span>
+    <span class="sub-item">3. Record payments</span>
+    <span class="sub-item">4. Check debt students</span>
+    <span class="sub-item">5. Export reports niba bikenewe</span>
+    <span class="sub-item">6. Funga system</span>
+
+    <hr>
+
+    <span class="section-header">21️⃣ End of Term Procedure</span>
+    <div>Iyo igihembwe kirangiye:</div>
+    <span class="sub-item">Kora backup ya database</span>
+    <span class="sub-item">Reba debt y’abanyeshuri</span>
+    <span class="sub-item">Kanda <strong>Advance Term</strong></span>
+    <span class="sub-item">System izimura abanyeshuri mu term ikurikira</span>
+
+    <hr>
+
+    <span class="section-header">22️⃣ Security Advice</span>
+    <span class="sub-item">Ntusige system ifunguye</span>
+    <span class="sub-item">Koresha password kuri computer</span>
+    <span class="sub-item">Bika backup kuri flash cyangwa cloud</span>
+
+    <hr>
+
+    <span class="section-header">23️⃣ File Structure ya App</span>
+    <div>App igizwe na:</div>
+    <div class="sub-item"><span class="file-path">key dm.py</span> -> main application</div>
+    <div class="sub-item"><span class="file-path">school.db</span> -> database</div>
+    <div class="sub-item"><span class="file-path">reports/</span> -> exported reports</div>
+    <div class="sub-item"><span class="file-path">backup/</span> -> database backups</div>
+
+    <hr>
+
+    <span class="section-header">24️⃣ Developer Notes</span>
+    <div>App yubatswe kuri:</div>
+    <span class="sub-item">Python</span>
+    <span class="sub-item">Tkinter GUI</span>
+    <span class="sub-item">SQLite database</span>
+    <div style="margin-top:10px;">Libraries: <span class="file-path">tkinter, sqlite3, datetime, os</span></div>
+
+    <hr>
+
+    <span class="section-header">25️⃣ Future Improvements</span>
+    <span class="sub-item">PDF receipts</span>
+    <span class="sub-item">SMS notifications</span>
+    <span class="sub-item">Student photo</span>
+    <span class="sub-item">Online backup</span>
+    <span class="sub-item">Multi-user login</span>
+    <span class="sub-item">Mobile version</span>
+
+</div>
                 </p>
 
                 <div class="quote">
