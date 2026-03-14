@@ -537,6 +537,165 @@ Debt_Report_Name.txt</li>
                     <!-- Amagambo y'umuntu runaka / Quote -->
               
             </div>
+                /* ==========================
+           AI CHAT WIDGET STYLES 
+        ========================== */
+        #ai-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            max-height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        #ai-header {
+            background: var(--ai-primary);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #ai-chat-history {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .msg { padding: 10px 14px; border-radius: 12px; font-size: 0.95em; max-width: 85%; }
+        .user-msg { background: #e8f5e9; align-self: flex-end; color: #1b5e20; }
+        .bot-msg { background: #f1f1f1; align-self: flex-start; color: #333; }
+
+        #ai-input-container {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        #ai-query {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        #ai-btn {
+            background: var(--ai-primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-container">
+        <div class="book-cover">
+            <h1>KEY DM</h1>
+            <p class="subtitle">Iyi ni web yakorewe kubika amakuru y'ibigo yakozwe na Kim Aristide</p>
+        </div>
+
+        <div class="book-content">
+            <div class="content">
+                <p>📘 KEY DM PRO USER GUIDE</p>
+                <h2>Introduction</h2>
+                <p>KEY DM PRO ni system ikoreshwa mu gucunga amafaranga y’ishuri, imyirondoro, kureba amadeni, no gukora reports mu buryo bwikora.</p>
+
+                <div class="key-dm-list">
+                    <span class="section-header">User Roles</span>
+                    <span class="sub-item"><strong>Admin:</strong> Settings & Advancement</span>
+                    <span class="sub-item"><strong>Cashier:</strong> Payments & Debt checks</span>
+                    
+                    <span class="section-header">Database</span>
+                    <div class="formula-box">Path: <span class="file-path">school.db</span></div>
+                </div>
+
+                <div class="quote" style="margin-top:40px;">
+                    gmail: grensrena@gmail.com | tell: 0796952187 | by key.x
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ai-widget">
+        <div id="ai-header">
+            <span>KEY DM AI Helper</span>
+            <small style="opacity: 0.8;">Gemini AI</small>
+        </div>
+        <div id="ai-chat-history">
+            <div class="msg bot-msg">Muraho! Ndi AI ya KEY DM. Nshobora kugufasha iki?</div>
+        </div>
+        <div id="ai-input-container">
+            <input type="text" id="ai-query" placeholder="Andika hano...">
+            <button id="ai-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const KEY = "AIzaSyAOQqilzYAoCrKxi8zdITdMeI7EqmEw_Sk";
+        const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${KEY}`;
+
+        const chatHistory = document.getElementById('ai-chat-history');
+        const input = document.getElementById('ai-query');
+        const btn = document.getElementById('ai-btn');
+
+        async function getAIResponse() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add User Message
+            appendMsg(text, 'user-msg');
+            input.value = '';
+
+            try {
+                const res = await fetch(URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: text }] }]
+                    })
+                });
+
+                const data = await res.json();
+                const aiMsg = data.candidates[0].content.parts[0].text;
+                appendMsg(aiMsg, 'bot-msg');
+            } catch (err) {
+                appendMsg("Mwihangane, habaye ikibazo cya connection.", 'bot-msg');
+            }
+        }
+
+        function appendMsg(msg, cls) {
+            const div = document.createElement('div');
+            div.className = `msg ${cls}`;
+            div.innerText = msg;
+            chatHistory.appendChild(div);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        btn.onclick = getAIResponse;
+        input.onkeypress = (e) => { if(e.key === 'Enter') getAIResponse(); };
+    </script>
+
+</body>
+</html>
         </div>
     </div>
 </body>
