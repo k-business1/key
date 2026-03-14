@@ -536,97 +536,136 @@ Debt_Report_Name.txt</li>
                     gmail:grensrena@gmail.com..tell:0796952187..by key.x"
                     <!-- Amagambo y'umuntu runaka / Quote -->
               
-            </div>// ==========================================
-// KEY X - AI CONFIGURATION
-// ==========================================
+            </div><div id="ai-widget">
+    <div id="ai-header" onclick="toggleAI()">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 10px; height: 10px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 5px #00ff00;"></div>
+            <span>Key X</span>
+        </div>
+        <span id="toggle-icon">−</span>
+    </div>
 
-const KEY = "AIzaSyAOQqilzYAoCrKxi8zdITdMeI7EqmEw_Sk";
-const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${KEY}`;
+    <div id="ai-chat-history">
+        <div class="msg bot-msg">Muraho! Ndi Key X, AI ya KEY DM. Nshobora kugufasha iki?</div>
+    </div>
 
-// Amabwiriza agenga imyitwarire ya AI
-const SYSTEM_PROMPT = "Witwa Key X. Uri AI idasanzwe ya system yitwa KEY DM. Uwayikoze (Creator) ni Kim Aristide. Subiza mu rurimi umukoresha akandikiyemo. Niba abajije uwayikoze, mubwire ko ari Kim Aristide.";
+    <div id="ai-input-container">
+        <input type="text" id="ai-query" placeholder="Baza ikibazo..." autocomplete="off">
+        <button id="ai-btn">Send</button>
+    </div>
+</div>
 
-const chatHistory = document.getElementById('ai-chat-history');
-const input = document.getElementById('ai-query');
-const btn = document.getElementById('ai-btn');
-
-/**
- * Toogles the chat widget visibility
- */
-function toggleAI() {
-    const widget = document.getElementById('ai-widget');
-    const icon = document.getElementById('toggle-icon');
-    widget.classList.toggle('minimized');
-    icon.innerText = widget.classList.contains('minimized') ? '+' : '−';
-}
-
-/**
- * Handles communication with the Gemini API
- */
-async function getAIResponse() {
-    const userText = input.value.trim();
-    if (!userText) return;
-
-    // 1. Show User Message
-    appendMsg(userText, 'user-msg');
-    input.value = '';
-
-    // 2. Local Logic: Quick check for "Who created you?"
-    const lowerText = userText.toLowerCase();
-    const creatorKeywords = ["wayikoze", "wakuzanye", "created you", "who made you", "nyirayo"];
-    
-    if (creatorKeywords.some(keyword => lowerText.includes(keyword))) {
-        setTimeout(() => {
-            appendMsg("Njyewe naremwe na Kim Aristide. Ndi AI yitwa Key X, nshinzwe kugufasha gukoresha system ya KEY DM.", 'bot-msg');
-        }, 500);
-        return;
+<style>
+    #ai-widget {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 330px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        display: flex;
+        flex-direction: column;
+        z-index: 9999;
+        border: 1px solid #e0e0e0;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
     }
 
-    // 3. API Call to Gemini
-    try {
-        const res = await fetch(URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ 
-                    parts: [{ text: SYSTEM_PROMPT + "\n\nUser Question: " + userText }] 
-                }]
-            })
-        });
-
-        const data = await res.json();
-        
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            const aiMsg = data.candidates[0].content.parts[0].text;
-            appendMsg(aiMsg, 'bot-msg');
-        } else {
-            throw new Error("API Error");
-        }
-
-    } catch (err) {
-        appendMsg("Mwihangane, habaye ikibazo cya connection. Reba niba internet ikora.", 'bot-msg');
-        console.error("AI Error:", err);
+    /* Iyo AI ihishwe (Minimized) */
+    #ai-widget.minimized {
+        height: 48px;
+        width: 140px;
     }
-}
 
-/**
- * Adds a message bubble to the chat history
- */
-function appendMsg(msg, cls) {
-    const div = document.createElement('div');
-    div.className = `msg ${cls}`;
-    div.innerText = msg;
-    chatHistory.appendChild(div);
-    
-    // Auto-scroll to bottom
-    chatHistory.scrollTop = chatHistory.scrollHeight;
-}
+    #ai-header {
+        background: #2e7d32; /* Ibara rya Green */
+        color: white;
+        padding: 12px 15px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+    }
 
-// Event Listeners
-btn.onclick = getAIResponse;
-input.onkeypress = (e) => { 
-    if(e.key === 'Enter') getAIResponse(); 
-};
+    #ai-chat-history {
+        height: 320px;
+        overflow-y: auto;
+        padding: 15px;
+        background: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Ubutumwa (Bubbles) */
+    .msg {
+        padding: 10px 14px;
+        border-radius: 15px;
+        font-size: 14px;
+        max-width: 85%;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
+
+    .user-msg {
+        background: #e8f5e9;
+        align-self: flex-end;
+        color: #1b5e20;
+        border-bottom-right-radius: 2px;
+    }
+
+    .bot-msg {
+        background: #ffffff;
+        align-self: flex-start;
+        color: #333;
+        border: 1px solid #eee;
+        border-bottom-left-radius: 2px;
+    }
+
+    #ai-input-container {
+        padding: 12px;
+        display: flex;
+        gap: 8px;
+        background: white;
+        border-top: 1px solid #eee;
+    }
+
+    #ai-query {
+        flex: 1;
+        padding: 9px 12px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+        font-size: 14px;
+    }
+
+    #ai-query:focus {
+        border-color: #2e7d32;
+    }
+
+    #ai-btn {
+        background: #2e7d32;
+        color: white;
+        border: none;
+        padding: 0 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    #ai-btn:hover {
+        background: #1b5e20;
+    }
+
+    /* Scrollbar style */
+    #ai-chat-history::-webkit-scrollbar { width: 5px; }
+    #ai-chat-history::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+</style>
         </div>
     </div>
 </body>
